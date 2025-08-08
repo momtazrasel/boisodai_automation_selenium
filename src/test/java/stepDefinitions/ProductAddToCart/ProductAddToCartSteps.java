@@ -49,4 +49,8 @@ public class ProductAddToCartSteps {
         Assert.assertNotEquals(test, "0", "Cart value did not change after adding product");
 
     }
+
+    @And("Increase or decrease the product by clicking the plus or minus icon")
+    public void increaseOrDecreaseTheProductByClickingThePlusOrMinusIcon() {
+    }
 }
