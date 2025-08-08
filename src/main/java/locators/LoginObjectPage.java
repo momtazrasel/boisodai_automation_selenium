@@ -12,13 +12,4 @@ public class LoginObjectPage {
     public  By loginLink = By.xpath("(//a[@class = 'bponi-lp bponi-fe'])[1]");
     public  By loginHereLink = By.xpath("(//div[@class = 'page__content'])[1]");
 
-
-
-
-
-//    public static WebElement getRegisterOption() throws InterruptedException {
-//        Thread.sleep(2000);
-//        return driver.findElement(registerOption);
-//
-//    }
 }
