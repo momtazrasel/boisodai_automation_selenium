@@ -6,8 +6,11 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.When;
 import locators.ProductAddToCartObjects;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import utils.DriverSetup;
+
+import java.time.Duration;
 
 public class ProductAddToCartSteps {
     private WebDriver driver;
@@ -52,5 +55,35 @@ public class ProductAddToCartSteps {
 
     @And("Increase or decrease the product by clicking the plus or minus icon")
     public void increaseOrDecreaseTheProductByClickingThePlusOrMinusIcon() {
+        String priceBeforeText = reusableMethod.getTextOfElement(product.productPrice)
+                .replace("মোট", "")
+                .replace("৳", "")
+                .trim();
+        int priceBefore = Integer.parseInt(priceBeforeText);
+        System.out.println("Price before: " + priceBefore);
+
+        reusableMethod.clickElement(product.plusIcon);
+
+        // ✅ Step 3: Wait until price updates
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait.until(driver1 -> {
+            String updatedText = reusableMethod.getTextOfElement(product.productPrice)
+                    .replace("মোট", "")
+                    .replace("৳", "")
+                    .trim();
+            return !updatedText.equals(priceBeforeText);
+        });
+
+        // ✅ Step 4: Get price after
+        String priceAfterText = reusableMethod.getTextOfElement(product.productPrice)
+                .replace("মোট", "")
+                .replace("৳", "")
+                .trim();
+        int priceAfter = Integer.parseInt(priceAfterText);
+        System.out.println("Price after: " + priceAfter);
+
+        // ✅ Step 5: Assert price increased
+        Assert.assertTrue(priceAfter > priceBefore, "Price did not increase after clicking '+' icon");
+
     }
 }
