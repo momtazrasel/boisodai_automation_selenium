@@ -5,6 +5,7 @@ import base.PageObjectManager;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.When;
 import locators.ProductAddToCartObjects;
+import org.apache.poi.ss.formula.functions.T;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -17,6 +18,10 @@ public class ProductAddToCartSteps {
     private PageObjectManager reusableMethod;
     private TestData testData;
     private ProductAddToCartObjects product = new ProductAddToCartObjects();
+
+    String phone = reusableMethod.getRandomPhoneNumber();
+    String name = reusableMethod.getRandomName();
+    String address = reusableMethod.getRandomAddress();
 
     public ProductAddToCartSteps(DriverSetup driverSetup){
         this.driver = driverSetup.driver;
@@ -84,6 +89,27 @@ public class ProductAddToCartSteps {
 
         // ✅ Step 5: Assert price increased
         Assert.assertTrue(priceAfter > priceBefore, "Price did not increase after clicking '+' icon");
+
+    }
+
+    @And("Enter the valid address")
+    public void enterTheValidAddress() throws InterruptedException {
+        reusableMethod.sendKeysToElement(product.phoneNo,phone);
+        reusableMethod.sendKeysToElement(product.name,name);
+        reusableMethod.sendKeysToElement(product.address,name);
+        Thread.sleep(2000);
+    }
+
+    @And("Click on the Next Button")
+    public void clickOnTheNextButton() throws InterruptedException {
+        reusableMethod.clickElement(product.nextButton);
+        Thread.sleep(2000);
+    }
+
+    @And("Select area and payment option")
+    public void selectAreaAndPaymentOption() {
+        reusableMethod.clickElement(product.area);
+        reusableMethod.clickElement(product.paymentOption);
 
     }
 }

@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Random;
 
 public class PageObjectManager {
+    private static final Random random = new Random();
     private WebDriver driver;
     private WebDriverWait wait;
     private int defaultWaitTime = 5;
@@ -336,5 +337,31 @@ public class PageObjectManager {
         }
 
         return phoneNumber.toString();
+    }
+
+    public static String getRandomPhoneNumber() {
+        String[] prefixes = {"013", "014", "015", "016", "017", "018", "019"};
+        String prefix = prefixes[random.nextInt(prefixes.length)];
+        StringBuilder phone = new StringBuilder(prefix);
+        for (int i = 0; i < 8; i++) { // remaining digits
+            phone.append(random.nextInt(10));
+        }
+        return phone.toString();
+    }
+
+    // ✅ Random Name
+    public static String getRandomName() {
+        String[] firstNames = {"Arif", "Rahim", "Tania", "Shakib", "Mitu", "Rifat", "Nusrat"};
+        String[] lastNames = {"Hossain", "Ahmed", "Chowdhury", "Khan", "Sultana", "Miah", "Akter"};
+        return firstNames[random.nextInt(firstNames.length)] + " " +
+                lastNames[random.nextInt(lastNames.length)];
+    }
+
+    // ✅ Random Address
+    public static String getRandomAddress() {
+        String[] streets = {"Bashundhara R/A", "Dhanmondi", "Uttara", "Gulshan", "Banani", "Mirpur"};
+        String street = streets[random.nextInt(streets.length)];
+        int houseNumber = 1 + random.nextInt(200);
+        return "House " + houseNumber + ", " + street + ", Dhaka";
     }
 }
