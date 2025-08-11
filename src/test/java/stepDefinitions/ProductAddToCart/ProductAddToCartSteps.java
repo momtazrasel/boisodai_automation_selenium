@@ -111,5 +111,38 @@ public class ProductAddToCartSteps {
         reusableMethod.clickElement(product.area);
         reusableMethod.clickElement(product.paymentOption);
 
+        String priceBeforeText = reusableMethod.getTextOfElement(product.productPrice)
+                .replace("মোট", "")
+                .replace("৳", "")
+                .trim();
+        int summaryPrice = Integer.parseInt(priceBeforeText);
+        System.out.println("Price before: " + summaryPrice);
+        // Get product total price (without delivery)
+        String productTotalText = reusableMethod.getTextOfElement(product.productPrice)
+                .replace("মোট", "")
+                .replace("৳", "")
+                .trim();
+        double productTotal = Double.parseDouble(productTotalText);
+        System.out.println("Price before: " + productTotal);
+
+// Get delivery charge
+        String deliveryChargeText = reusableMethod.getTextOfElement(product.deliveryCharge)
+                .replace("৳", "")
+                .trim();
+        double deliveryCharge = Double.parseDouble(deliveryChargeText);
+        System.out.println("Price before: " + deliveryCharge);
+
+// Get final total (displayed in checkout)
+        String finalTotalText = reusableMethod.getTextOfElement(product.finalTotal)
+                .replace("৳", "")
+                .trim();
+        double finalTotal = Double.parseDouble(finalTotalText);
+        System.out.println("Price before: " + finalTotal);
+
+// Assert that product total + delivery charge = final total
+        Assert.assertEquals(productTotal + deliveryCharge, finalTotal,
+                "Total amount mismatch! Expected: " + (productTotal + deliveryCharge) + " but found: " + finalTotal);
+
+
     }
 }
