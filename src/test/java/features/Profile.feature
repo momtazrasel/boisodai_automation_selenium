@@ -8,3 +8,4 @@ Feature: Profile Functionalities test
 
   Scenario: Profile information successfully updated
     When Click on the Profile icon
+    Then All the menu is available
